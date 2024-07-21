@@ -16,13 +16,15 @@ class Scraper:
                 )''', re.VERBOSE)   # Group [0] Lists all
         
         for groups in self.email.findall(text):
-            self.matches.append(groups[0])
+            self.matches.append(groups[0]) # Change zero to either 1, 2, or 3 to get different results
             
         return self.matches # Place return on the outside of the loop so it iterates all matching emails
 
 scraper = Scraper()
-print(scraper.emailFinder(copyText))
+list = scraper.emailFinder(copyText)
 
+for i in list:
+    print(i)
 
 
 
