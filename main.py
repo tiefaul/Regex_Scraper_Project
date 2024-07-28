@@ -7,7 +7,7 @@ copyText = str(pyperclip.paste())
 class Scraper:
     
     def emailFinder(self, text: str) -> None:
-        self.matches = []
+        self.email_matches = []
         self.email = re.compile(r'''( 
                 ([a-zA-Z0-9._%+-]+) # Group[1] List Username
                 @
@@ -16,12 +16,12 @@ class Scraper:
                 )''', re.VERBOSE)
         
         for groups in self.email.findall(text):
-            self.matches.append(groups[0]) # Change zero to either 1, 2, or 3 to get different results
+            self.email_matches.append(groups[0]) # Change zero to either 1, 2, or 3 to get different results
             
-        return self.matches # Place return on the outside of the loop so it iterates all matching emails
+        return self.email_matches # Place return on the outside of the loop so it iterates all matching emails
     
     def phoneFinder(self, text: str) -> None:
-        self.matches = []
+        self.phone_matches = []
         self.phone = re.compile(r'''( 
                 (\([0-9]{3}\)|[0-9]{3}) # Group [1] Area Code
                 [-\s]
@@ -31,30 +31,30 @@ class Scraper:
                 )''', re.VERBOSE)
         
         for groups in self.phone.findall(text):
-            self.matches.append(''.join(groups[0]).replace(' ', '').replace('(', '').replace(')', '-'))
+            self.phone_matches.append(''.join(groups[0]).replace(' ', '').replace('(', '').replace(')', '-'))
 
-        return self.matches
+        return self.phone_matches
     
     def urlFinder(self, text: str) -> None:
-        self.matches = []
+        self.url_matches = []
         self.url = re.compile(r'''
                         (https?://\S+ | www.\S+)      
                               ''', re.VERBOSE)
         
         for groups in self.url.findall(text):
-            self.matches.append(groups)
+            self.url_matches.append(groups)
         
-        return self.matches
+        return self.url_matches
 
 scraper = Scraper()
-emailList = scraper.emailFinder(copyText)
-phoneList = scraper.phoneFinder(copyText)
-urlList = scraper.urlFinder(copyText)
+email_list = scraper.emailFinder(copyText)
+phone_list = scraper.phoneFinder(copyText)
+url_list = scraper.urlFinder(copyText)
 
-def loops(lists):
+def print_list(lists):
     for i in lists:
         print(i)
 
-loops(emailList)
-loops(phoneList)
-loops(urlList)
+print_list(email_list)
+print_list(phone_list)
+print_list(url_list)
