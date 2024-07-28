@@ -14,3 +14,8 @@ To use this script, you need to have Python installed on your machine along with
 
 ```bash
 pip install pyperclip
+```
+## Usage
+1. Copy the text you want to scrape into your clipboard.
+2. Run the script.
+3. The script will print the extracted emails, phone numbers, and URLs to the console.
