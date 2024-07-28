@@ -20,7 +20,7 @@ class Scraper:
             
         return self.matches # Place return on the outside of the loop so it iterates all matching emails
     
-    def phoneNumber(self, text: str) -> None:
+    def phoneFinder(self, text: str) -> None:
         self.matches = []
         self.phone = re.compile(r'''( 
                 (\([0-9]{3}\)|[0-9]{3}) # Group [1] Area Code
@@ -35,10 +35,21 @@ class Scraper:
 
         return self.matches
     
+    def urlFinder(self, text: str) -> None:
+        self.matches = []
+        self.url = re.compile(r'''
+                        (https?://\S+ | www.\S+)      
+                              ''', re.VERBOSE)
+        
+        for groups in self.url.findall(text):
+            self.matches.append(groups)
+        
+        return self.matches
 
 scraper = Scraper()
 emailList = scraper.emailFinder(copyText)
-phoneList = scraper.phoneNumber(copyText)
+phoneList = scraper.phoneFinder(copyText)
+urlList = scraper.urlFinder(copyText)
 
 def loops(lists):
     for i in lists:
@@ -46,6 +57,4 @@ def loops(lists):
 
 loops(emailList)
 loops(phoneList)
-
-
-# Create a website scraper
+loops(urlList)
